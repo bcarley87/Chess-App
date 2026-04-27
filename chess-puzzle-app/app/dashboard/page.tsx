@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { prisma } from "@/lib/db"
 import Link from "next/link"
 import { signOut } from "@/auth"
+import PuzzleSetSelector from "./PuzzleSetSelector"
 
 const LEVELS = [
   { label: "Beginner", min: 400, max: 800, color: "#5a9e5a", emoji: "🌱" },
@@ -86,8 +87,11 @@ export default async function Dashboard() {
           <StatCard label="Best Streak" value={`${stats?.bestStreak ?? 0} days`} icon="⭐" />
         </div>
 
-        {/* Difficulty Selector */}
-        <h2 style={{ fontSize: "1.25rem", fontWeight: "700", marginBottom: "1rem" }}>Choose Difficulty</h2>
+        {/* Custom Puzzle Set */}
+        <PuzzleSetSelector />
+
+        {/* Quick Difficulty Selector */}
+        <h2 style={{ fontSize: "1.25rem", fontWeight: "700", marginBottom: "1rem" }}>Quick Start by Difficulty</h2>
         <div style={{ display: "grid", gridTemplateColumns: "repeat(5, 1fr)", gap: "1rem", marginBottom: "2.5rem" }}>
           {LEVELS.map((lvl) => (
             <Link

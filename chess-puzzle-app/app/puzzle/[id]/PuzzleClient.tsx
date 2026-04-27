@@ -20,6 +20,7 @@ type Props = {
   puzzle: Puzzle
   userRating: number
   previouslySolved: boolean
+  activeThemes: string
 }
 
 const LEVELS = [
@@ -34,7 +35,7 @@ function ratingLabel(r: number) {
   return LEVELS.find((l) => r >= l.min && r < l.max)?.label ?? "Expert"
 }
 
-export default function PuzzleClient({ puzzle, userRating, previouslySolved }: Props) {
+export default function PuzzleClient({ puzzle, userRating, previouslySolved, activeThemes }: Props) {
   const router = useRouter()
   const [result, setResult] = useState<{ solved: boolean; ratingDiff: number; newRating: number } | null>(null)
   const [elapsed, setElapsed] = useState(0)
@@ -150,7 +151,10 @@ export default function PuzzleClient({ puzzle, userRating, previouslySolved }: P
               </div>
               <div style={{ display: "flex", gap: "0.75rem", marginTop: "1rem" }}>
                 <button
-                  onClick={() => router.push(`/puzzle/next?min=${puzzle.rating - 200}&max=${puzzle.rating + 200}`)}
+                  onClick={() => {
+                    const themeParam = activeThemes ? `&themes=${activeThemes}` : ""
+                    router.push(`/puzzle/next?min=${puzzle.rating - 200}&max=${puzzle.rating + 200}${themeParam}`)
+                  }}
                   style={{ flex: 1, padding: "0.75rem", background: "#7fa650", border: "none", borderRadius: "8px", color: "#fff", fontWeight: "700", cursor: "pointer" }}
                 >
                   Next Puzzle →
