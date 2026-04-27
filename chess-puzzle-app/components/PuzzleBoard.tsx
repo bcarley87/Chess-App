@@ -40,7 +40,9 @@ function buildReplayPositions(startFen: string, moves: string[]): { fen: string;
 }
 
 export default function PuzzleBoard({ puzzle, onSolve }: Props) {
-  const [game, setGame] = useState(new Chess(puzzle.fen))
+  const [game, setGame] = useState<Chess | null>(() => {
+    try { return new Chess(puzzle.fen) } catch { return null }
+  })
   const [moveIndex, setMoveIndex] = useState(0)
   const [status, setStatus] = useState<Status>("thinking")
   const [orientation, setOrientation] = useState<"white" | "black">("white")
@@ -53,7 +55,8 @@ export default function PuzzleBoard({ puzzle, onSolve }: Props) {
   const replayPositions = useRef<{ fen: string; from: string; to: string }[]>([])
 
   useEffect(() => {
-    const chess = new Chess(puzzle.fen)
+    let chess: Chess
+    try { chess = new Chess(puzzle.fen) } catch { setGame(null); return }
     // Player plays as the side whose turn it is in the starting FEN
     setOrientation(chess.turn() === "w" ? "white" : "black")
     setGame(new Chess(puzzle.fen))
@@ -95,7 +98,7 @@ export default function PuzzleBoard({ puzzle, onSolve }: Props) {
     }
 
     try {
-      const chess = new Chess(game.fen())
+      const chess = new Chess(game!.fen())
       chess.move({ from: sourceSquare, to: targetSquare, promotion: isPromo ? (expectedPromo ?? "q") : undefined })
       const newFen = chess.fen()
 
@@ -202,6 +205,17 @@ export default function PuzzleBoard({ puzzle, onSolve }: Props) {
   const currentReplayPos = replayPositions.current[replayIndex]
   const isFinished = status === "solved" || status === "failed"
 
+  if (!game) {
+    return (
+      <div style={{ padding: "2rem", textAlign: "center", color: "#c95a5a", background: "#262626", borderRadius: "10px" }}>
+        <div style={{ fontSize: "1.1rem", fontWeight: "600", marginBottom: "0.75rem" }}>Invalid puzzle data</div>
+        <button onClick={() => onSolve(false, 0)} style={{ ...btnStyle, border: "1px solid #4a9eff", color: "#4a9eff" }}>
+          Skip Puzzle →
+        </button>
+      </div>
+    )
+  }
+
   return (
     <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
       {replayMode ? (
@@ -242,7 +256,7 @@ export default function PuzzleBoard({ puzzle, onSolve }: Props) {
       <div style={{ borderRadius: "8px", overflow: "hidden", boxShadow: "0 8px 32px rgba(0,0,0,0.5)" }}>
         <Chessboard
           options={{
-            position: replayMode ? (currentReplayPos?.fen ?? puzzle.fen) : game.fen(),
+            position: replayMode ? (currentReplayPos?.fen ?? puzzle.fen) : game!.fen(),
             onPieceDrop: replayMode ? () => false : handleDrop,
             boardOrientation: orientation,
             squareStyles: replayMode ? replaySquareStyles(replayIndex) : squareStyles,

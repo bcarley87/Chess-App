@@ -34,7 +34,7 @@ export const SEED_PUZZLES: SeedPuzzle[] = [
   { lichessId: "000WG", fen: "5rk1/5ppp/8/8/8/8/5PPP/5RK1 w - - 0 1", moves: ["f1f8", "g8h7", "f8h8"], rating: 442, themes: ["mateIn2", "short"], title: "Rook Mate" },
   { lichessId: "000XH", fen: "8/8/1k6/2Q5/8/1K6/8/8 w - - 0 1", moves: ["c5b5"], rating: 400, themes: ["mateIn1", "short"], title: "Queen Mate" },
   { lichessId: "000YI", fen: "r1bqkb1r/pppp1ppp/2n2n2/4p3/2B1P3/5N2/PPPP1PPP/RNBQ1RK1 b kq - 3 4", moves: ["f6e4", "d1h5", "g7g6", "h5c5"], rating: 622, themes: ["fork", "short"], title: "Piece Win" },
-  { lichessId: "000ZJ", fen: "r3kb1r/ppp2ppp/4bn2/8/8/2N2N2/PPP2PPP/R1BR1K1 w kq - 0 12", moves: ["d1d8", "a8d8", "c1g5"], rating: 697, themes: ["pin", "short"], title: "Rook Invasion" },
+  { lichessId: "000ZJ", fen: "r3kb1r/ppp2ppp/4bn2/8/8/2N2N2/PPP2PPP/R1BR2K1 w kq - 0 12", moves: ["d1d8", "a8d8", "c1g5"], rating: 697, themes: ["pin", "short"], title: "Rook Invasion" },
   { lichessId: "0010K", fen: "8/6pk/7p/8/8/8/6PP/6K1 w - - 0 1", moves: ["g2g4", "h6h5", "g4h5", "g7h5", "g1h2"], rating: 534, themes: ["endgame", "short"], title: "Pawn Endgame" },
   { lichessId: "0011L", fen: "r1b1k2r/pppp1ppp/2n2n2/2b1p3/2B1P3/2N2N2/PPPP1PPP/R1BQ1RK1 b kq - 5 5", moves: ["c5f2", "f1f2", "d8d4"], rating: 744, themes: ["fork", "short"], title: "Bishop Sacrifice Fork" },
   { lichessId: "0012M", fen: "6k1/5ppp/p2r4/8/8/8/5PPP/3R2K1 w - - 0 1", moves: ["d1d8", "d6d8", "g1f1"], rating: 466, themes: ["endgame", "short"], title: "Rook Exchange" },
