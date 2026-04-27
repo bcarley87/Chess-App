@@ -3,7 +3,9 @@ import { PrismaPg } from "@prisma/adapter-pg"
 import { Pool } from "pg"
 
 function createPrismaClient() {
-  const pool = new Pool({ connectionString: process.env.DATABASE_URL! })
+  const url = new URL(process.env.DATABASE_URL!)
+  url.searchParams.set("sslmode", "verify-full")
+  const pool = new Pool({ connectionString: url.toString() })
   const adapter = new PrismaPg(pool)
   return new PrismaClient({ adapter })
 }
