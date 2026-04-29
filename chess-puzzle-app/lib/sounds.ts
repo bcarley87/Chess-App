@@ -15,7 +15,7 @@ function woodClick(
   delay = 0,
 ) {
   const c = getCtx()
-  const start = c.currentTime + delay
+  const start = c.currentTime + 0.05 + delay
 
   const bufLen = Math.ceil(c.sampleRate * duration)
   const buf = c.createBuffer(1, bufLen, c.sampleRate)
@@ -44,7 +44,7 @@ function woodClick(
 // Single wooden piece placement: brief sine click + warm bandpass noise body
 function piecePlace(volume = 1, delay = 0) {
   const c = getCtx()
-  const start = c.currentTime + delay
+  const start = c.currentTime + 0.05 + delay
 
   // ~6ms sine burst — tactile impact click, decays before it can ring
   const osc = c.createOscillator()
@@ -95,7 +95,7 @@ function captureImpact(
   delay: number,
 ) {
   const c = getCtx()
-  const start = c.currentTime + delay
+  const start = c.currentTime + 0.05 + delay
 
   const osc = c.createOscillator()
   const oscGain = c.createGain()
@@ -141,7 +141,7 @@ function tone(freq: number, duration: number, volume = 0.25, delay = 0) {
   gain.connect(c.destination)
   osc.type = "sine"
   osc.frequency.value = freq
-  const start = c.currentTime + delay
+  const start = c.currentTime + 0.05 + delay
   gain.gain.setValueAtTime(volume, start)
   gain.gain.exponentialRampToValueAtTime(0.001, start + duration)
   osc.start(start)
